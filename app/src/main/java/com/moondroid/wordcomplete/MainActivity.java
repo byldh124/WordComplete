@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     ArrayList<Integer> btn = new ArrayList<>();
 
-    final int STAGE = 202;
+    final int STAGE = 257;
 
     String answer;
 
@@ -415,5 +415,60 @@ public class MainActivity extends AppCompatActivity {
         word.add("crown");
         word.add("snow");
         word.add("chick");
+        word.add("telephone");
+        word.add("accident");
+        word.add("alarm");
+        word.add("angel");
+        word.add("army");
+        word.add("atom");
+        word.add("bat");
+        word.add("bean");
+        word.add("bee");
+        word.add("beer");
+        word.add("beggar");
+        word.add("belt");
+        word.add("bill");
+        word.add("captain");
+        word.add("cart");
+        word.add("clock");
+        word.add("cold");
+        word.add("comb");
+        word.add("concert");
+        word.add("cookie");
+        word.add("corn");
+        word.add("cotton");
+        word.add("couple");
+        word.add("dawn");
+        word.add("desert");
+        word.add("dessert");
+        word.add("detective");
+        word.add("devil");
+        word.add("eraser");
+        word.add("exhibition");
+        word.add("exit");
+        word.add("factory");
+        word.add("fairy");
+        word.add("fall");
+        word.add("fist");
+        word.add("flute");
+        word.add("forest");
+        word.add("frog");
+        word.add("general");
+        word.add("ghost");
+        word.add("god");
+        word.add("hawk");
+        word.add("helicopter");
+        word.add("hurray");
+        word.add("iceberg");
+        word.add("kite");
+        word.add("lock");
+        word.add("meteor");
+        word.add("planet");
+        word.add("promise");
+        word.add("rhinoceros");
+        word.add("thief");
+        word.add("vote");
+        word.add("washer");
+        word.add("wolf");
     }
 }
