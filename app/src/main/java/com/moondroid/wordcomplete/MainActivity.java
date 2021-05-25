@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Random;
 
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < alphabet.length; i++) {
             alphabet[i] = findViewById(R.id.alpha01 + i);
         }
-        wordSet();
+        word = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.words)));
 
         for (int i = 0; i < STAGE; i++) {
             stageGo.add(i);
