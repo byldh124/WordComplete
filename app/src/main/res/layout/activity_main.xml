@@ -8,43 +8,62 @@
     android:padding="16dp"
     tools:context=".MainActivity">
 
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:text="Word Complete"
-        android:textSize="24sp"
-        android:gravity="center"
-        android:layout_weight="1"
-        android:textColor="#1C6FB1"
-        android:textStyle="bold"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"/>
+        android:layout_weight="1">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:gravity="center"
+            android:text="Word Complete"
+            android:textColor="#1C6FB1"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <com.moondroid.wordcomplete.AnimImageView
+            android:id="@+id/icSound"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="8dp"
+            android:onClick="changeSound"
+            android:src="@drawable/ic_baseline_music_note_24" />
+
+    </RelativeLayout>
+
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="5"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
+        android:layout_weight="5"
         android:gravity="center">
 
-        <ImageView
+        <com.moondroid.wordcomplete.AnimImageView
             android:id="@+id/start"
-            android:clickable="true"
             android:layout_width="wrap_content"
             android:layout_height="100dp"
             android:layout_centerInParent="true"
-            android:src="@drawable/start"
-            android:adjustViewBounds="true"/>
+            android:adjustViewBounds="true"
+            android:clickable="true"
+            android:src="@drawable/start" />
+
         <ImageView
             android:id="@+id/image"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
+
         <ImageView
             android:id="@+id/answer"
             android:layout_width="match_parent"
-            android:layout_centerInParent="true"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true" />
 
 
     </RelativeLayout>
@@ -52,64 +71,49 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp">
+        android:layout_marginBottom="8dp"
+        android:layout_weight="1">
 
         <TextView
             android:id="@+id/text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:fontFamily="@font/rubik"
             android:gravity="center"
             android:text=""
-            android:fontFamily="@font/rubik"
-            android:textSize="48sp"
             android:textColor="#0E7FB1"
-            android:textStyle="bold"/>
+            android:textSize="48sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:gravity="center">
-        <ImageView
+        android:gravity="center"
+        android:weightSum="5">
+
+        <com.moondroid.wordcomplete.AnimImageView
             android:id="@+id/alpha01"
-            android:onClick="click"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:clickable="true"/>
-        <ImageView
+            style="@style/AlphabetImageView" />
+
+        <com.moondroid.wordcomplete.AnimImageView
             android:id="@+id/alpha02"
-            android:onClick="click"
-            android:clickable="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"/>
-        <ImageView
+            style="@style/AlphabetImageView" />
+
+        <com.moondroid.wordcomplete.AnimImageView
             android:id="@+id/alpha03"
-            android:onClick="click"
-            android:clickable="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"/>
-        <ImageView
+            style="@style/AlphabetImageView" />
+
+        <com.moondroid.wordcomplete.AnimImageView
             android:id="@+id/alpha04"
-            android:onClick="click"
-            android:clickable="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"/>
-        <ImageView
+            style="@style/AlphabetImageView" />
+
+        <com.moondroid.wordcomplete.AnimImageView
             android:id="@+id/alpha05"
-            android:onClick="click"
-            android:clickable="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"/>
-
-
+            style="@style/AlphabetImageView" />
 
     </LinearLayout>
 
@@ -117,48 +121,30 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:gravity="center">
+        android:gravity="center"
+        android:weightSum="5">
 
-        <ImageView
+        <com.moondroid.wordcomplete.AnimImageView
             android:id="@+id/alpha06"
-            android:onClick="click"
-            android:clickable="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"/>
-        <ImageView
+            style="@style/AlphabetImageView" />
+
+        <com.moondroid.wordcomplete.AnimImageView
             android:id="@+id/alpha07"
-            android:onClick="click"
-            android:clickable="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"/>
-        <ImageView
+            style="@style/AlphabetImageView" />
+
+        <com.moondroid.wordcomplete.AnimImageView
             android:id="@+id/alpha08"
-            android:onClick="click"
-            android:clickable="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"/>
-        <ImageView
+            style="@style/AlphabetImageView" />
+
+        <com.moondroid.wordcomplete.AnimImageView
             android:id="@+id/alpha09"
-            android:onClick="click"
-            android:clickable="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"/>
-        <ImageView
+            style="@style/AlphabetImageView" />
+
+        <com.moondroid.wordcomplete.AnimImageView
             android:id="@+id/alpha10"
-            android:onClick="click"
-            android:clickable="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"/>
+            style="@style/AlphabetImageView" />
 
     </LinearLayout>
-
 
 
 </LinearLayout>
