@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@layout/fragment_splash">
+
+    <fragment
+        android:id="@+id/fragmentSplash"
+        android:name="com.moondroid.wordcomplete.view.SplashFragment"
+        tools:layout="@layout/fragment_splash">
+
+        <action
+            android:id="@+id/splash_to_quiz"
+            app:destination="@id/fragmentQuiz"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentQuiz"
+        android:name="com.moondroid.wordcomplete.view.QuizFragment"
+        tools:layout="@layout/fragment_quiz"/>
+
+</navigation>
