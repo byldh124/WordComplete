@@ -45,7 +45,6 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
 
         checkAppVersion()
         initView()
-        getItems()
     }
 
     private fun checkAppVersion() {
