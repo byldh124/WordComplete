@@ -3,21 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@layout/fragment_splash">
+    app:startDestination="@id/splashFragment">
 
     <fragment
-        android:id="@+id/fragmentSplash"
+        android:id="@+id/splashFragment"
         android:name="com.moondroid.wordcomplete.view.SplashFragment"
         tools:layout="@layout/fragment_splash">
 
         <action
             android:id="@+id/splash_to_quiz"
-            app:destination="@id/fragmentQuiz"/>
+            app:destination="@id/quizFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true"/>
 
     </fragment>
 
     <fragment
-        android:id="@+id/fragmentQuiz"
+        android:id="@+id/quizFragment"
         android:name="com.moondroid.wordcomplete.view.QuizFragment"
         tools:layout="@layout/fragment_quiz"/>
 

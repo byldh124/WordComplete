@@ -1,4 +1,4 @@
-package com.moondroid.wordcomplete;
+package com.moondroid.wordcomplete.legacy;
 
 import android.content.Context;
 import android.media.MediaPlayer;
@@ -10,6 +10,8 @@ import android.view.animation.AnimationUtils;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
+
+import com.moondroid.wordcomplete.R;
 
 public class AnimImageView extends AppCompatImageView {
     private Context ctx;
@@ -72,8 +74,6 @@ public class AnimImageView extends AppCompatImageView {
             player = null;
         }
         player = MediaPlayer.create(ctx, R.raw.tab);
-        player.setVolume(MainActivity.sound ? 1.0f : 0.0f,
-                MainActivity.sound ? 1.0f : 0.0f);
         player.start();
     }
 

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">영어단어 맞추기</string>
+    <string name="cmn_start">시작하기</string>
+    <string name="cmn_confirm">확인</string>
 </resources>

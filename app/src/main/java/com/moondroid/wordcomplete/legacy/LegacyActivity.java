@@ -1,6 +1,4 @@
-package com.moondroid.wordcomplete;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.moondroid.wordcomplete.legacy;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,6 +7,10 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.moondroid.wordcomplete.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,6 +40,8 @@ public class LegacyActivity extends AppCompatActivity {
     Animation shake;
 
     ArrayList<Integer> stageGo = new ArrayList<>();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
