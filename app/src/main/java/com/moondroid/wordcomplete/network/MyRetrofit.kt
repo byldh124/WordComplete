@@ -13,7 +13,6 @@ object MyRetrofit {
 
     private var okHttpClient: OkHttpClient? = null
 
-
     val retrofit: Retrofit
         get() {
             return Retrofit.Builder()

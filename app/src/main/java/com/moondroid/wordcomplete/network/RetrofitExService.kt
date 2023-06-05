@@ -6,7 +6,6 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface RetrofitExService {
-
     @GET("app/checkVersion.php")
     fun checkAppVersion(
         @Query("versionCode") versionCode: Int,

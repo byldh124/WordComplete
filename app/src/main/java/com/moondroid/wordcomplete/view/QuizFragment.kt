@@ -109,7 +109,8 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
 
         val drawableId = mContext.getDrawableId(String.format("image%03d", item.index))
         Glide.with(mContext).load(drawableId).into(binding.ivQuiz)
-        name = item.name
+        binding.title.text = item.ko
+        name = item.en
         val name = name.shuffle()
 
         if (name.length <= 5) {
