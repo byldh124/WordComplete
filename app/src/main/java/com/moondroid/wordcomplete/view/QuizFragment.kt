@@ -40,9 +40,11 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
     private val items by lazy {
         mContext.items ?: throw IllegalStateException()
     }
+
     private val textPadding by lazy {
         dpToPixel(mContext, 8)
     }
+
     var name = ""
     var stage = 0
 
@@ -50,18 +52,9 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
         AnimationUtils.loadAnimation(mContext, R.anim.shakeanimation)
     }
 
-    private lateinit var tts: TextToSpeech
+    private val list = ArrayList<View>()
 
-    companion object {
-        val layoutParams =
-            LinearLayoutCompat.LayoutParams(
-                0,
-                LayoutParams.MATCH_PARENT,
-                1.0f
-            ).apply {
-                setMargins(8, 8, 8, 8)
-            }
-    }
+    private lateinit var tts: TextToSpeech
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -70,6 +63,12 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        init()
+        setItem(stage)
+    }
+
+    private fun init() {
+        // 스피치 츠기화
         tts = TextToSpeech(mContext) {
             if (it != TextToSpeech.ERROR) {
                 tts.language = Locale.US
@@ -77,9 +76,14 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
         }.apply {
             setSpeechRate(0.8f)
         }
+
+        // 효과음 초기화
         clickSound = MediaPlayer.create(mContext, R.raw.tab)
         correctSound = MediaPlayer.create(mContext, R.raw.correct)
         incorrectSound = MediaPlayer.create(mContext, R.raw.incorrect)
+
+
+        // 배너 광고 초기화
         MobileAds.initialize(mContext)
         val adRequest = AdRequest.Builder().build()
         binding.adView.loadAd(adRequest)
@@ -88,28 +92,54 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
                 checkField(it)
             }
         }
-        setItem(stage)
+
+        // 유틸 버튼 Region Start
+        binding.icSound.setOnClickListener {
+            tts.speak(name, TextToSpeech.QUEUE_FLUSH, null, "uid")
+        }
+
+        binding.icReset.setOnClickListener {
+            setItem(++stage)
+        }
+
+        binding.icBack.setOnClickListener {
+            if (list.isNotEmpty()) {
+                val origin = binding.tvAnswer.text
+                binding.tvAnswer.text = origin.substring(0, origin.lastIndex)
+                val lastView = list[list.lastIndex]
+                lastView.visible()
+                list.remove(lastView)
+            }
+        } // Region End
     }
 
+    /**
+     * 아이템 세팅
+     **/
     private fun setItem(stage: Int) {
         if (stage > items.lastIndex) {
             this@QuizFragment.stage = 0
             items.shuffle()
         }
+
+        // View 초기화
+        list.clear()
         binding.tvAnswer.text = ""
         binding.btnWrapper1.removeAllViews()
         binding.btnWrapper2.removeAllViews()
         binding.ivCorrect.visible(false)
 
-        if (stage != 0 && stage % 13 == 0) {
-            mContext.showAd()
-        }
-
+        // 아이템 세팅
         val item = items[stage]
 
-        val drawableId = mContext.getDrawableId(String.format("image%03d", item.index))
-        Glide.with(mContext).load(drawableId).into(binding.ivQuiz)
-        binding.title.text = item.ko
+        // 이미지 로드
+        val resName = String.format("image%03d", item.index)
+        val drawable = ContextCompat.getDrawable(mContext, mContext.getDrawableId(resName))
+        Glide.with(mContext).load(drawable).into(binding.ivQuiz)
+
+        // 알파벳 버튼
+        binding.ko = item.ko
+        binding.utilsEnable = true
         name = item.en
         val name = name.shuffle()
 
@@ -134,16 +164,25 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
         }
     }
 
+    /**
+     * 정답 확인
+     **/
     private fun checkCorrect(isCorrect: Boolean) {
+        binding.utilsEnable = false
         if (isCorrect) {
             binding.ivCorrect.apply {
-                Glide.with(mContext).load(R.drawable.answer_o).into(binding.ivCorrect)
+                Glide.with(mContext).load(R.drawable.answer_o).into(this)
                 visible()
                 correctSound?.start()
                 handler.postDelayed({
                     tts.speak(name, TextToSpeech.QUEUE_FLUSH, null, "uid")
-                }, 300)
-                handler.postDelayed({ setItem(++stage) }, 1300)
+                }, DELAY_OF_RIGHT_SOUND)
+
+                if (stage != 0 && stage % FOREGROUND_AD_INTERVAL == 0) {
+                    mContext.showAd { setItem(++stage) }
+                } else {
+                    handler.postDelayed({ setItem(++stage) }, DELAY_OF_TTS)
+                }
             }
         } else {
             binding.ivCorrect.apply {
@@ -151,11 +190,14 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
                 visible()
                 startAnimation(shakeAnim)
                 incorrectSound?.start()
-                handler.postDelayed({ setItem(stage) }, 300)
+                handler.postDelayed({ setItem(stage) }, DELAY_OF_RIGHT_SOUND)
             }
         }
     }
 
+    /**
+     * 알파벳 버튼 생성
+     **/
     @SuppressLint("SetTextI18n")
     private fun getTextView(char: Char): AppCompatTextView {
         val textView = AppCompatTextView(mContext)
@@ -181,11 +223,15 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
             val before = binding.tvAnswer.text.toString()
             binding.tvAnswer.text = before + char
             it.visibility = View.INVISIBLE
+            list.add(it)
         }
 
         return textView
     }
 
+    /**
+     * 사운드 초기화
+     **/
     override fun onDestroy() {
         super.onDestroy()
         clickSound?.let {
@@ -203,5 +249,21 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
             it.release()
             incorrectSound = null
         }
+    }
+
+
+    companion object {
+        val layoutParams =
+            LinearLayoutCompat.LayoutParams(
+                0,
+                LayoutParams.MATCH_PARENT,
+                1.0f
+            ).apply {
+                setMargins(8, 8, 8, 8)
+            }
+
+        const val FOREGROUND_AD_INTERVAL = 13
+        const val DELAY_OF_RIGHT_SOUND = 300L
+        const val DELAY_OF_TTS = 1300L
     }
 }

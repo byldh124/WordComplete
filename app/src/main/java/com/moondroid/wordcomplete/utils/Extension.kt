@@ -18,7 +18,7 @@ object Extension {
 
     fun Any.debug(msg: String) {
         if (BuildConfig.DEBUG) {
-            Log.d("Moondroid", "[${this.javaClass.simpleName.trim()}] | $msg")
+            Log.e("Moondroid", "[${this.javaClass.simpleName.trim()}] | $msg")
         }
     }
 

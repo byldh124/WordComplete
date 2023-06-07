@@ -11,4 +11,7 @@
     <color name="blue_01">#2B77D3</color>
     <color name="blue_02">#1D5BA6</color>
     <color name="blue_03">#09284E</color>
+
+    <color name="orange_01">#f58f00</color>
+    <color name="orange_02">#C8790A</color>
 </resources>

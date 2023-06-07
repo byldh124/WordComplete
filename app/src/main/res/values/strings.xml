@@ -2,4 +2,7 @@
     <string name="app_name">영어단어 맞추기</string>
     <string name="cmn_start">시작하기</string>
     <string name="cmn_confirm">확인</string>
+    <string name="cmn_listen">듣기</string>
+    <string name="cmn_delete">지우기</string>
+    <string name="cmn_reset">다시하기</string>
 </resources>

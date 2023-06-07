@@ -6,7 +6,7 @@ plugins {
     id("androidx.navigation.safeargs.kotlin")
 }
 
-
+val properties = gradleLocalProperties(rootDir)
 
 android {
     namespace = "com.moondroid.wordcomplete"
@@ -16,31 +16,22 @@ android {
         applicationId = "com.moondroid.wordcomplete"
         minSdk = 21
         targetSdk = 33
-        versionCode = 12
-        versionName = "1.2.1"
+        versionCode = 13
+        versionName = "1.2.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        val properties = gradleLocalProperties(rootDir)
+
         val googleAdsAppId: String = properties.getProperty("google.ads.app.id")
-        val bannerId: String = properties.getProperty("google.ads.banner.id")
-        val foregroundId: String = properties.getProperty("google.ads.foreground.id")
-        println("Google Ads App Id : $googleAdsAppId")
+
 
         manifestPlaceholders["googleAdsAppId"] = googleAdsAppId
-        resValue("string", "banner_id", bannerId)
-        resValue("string", "foreground_id", foregroundId)
+
     }
 
     buildTypes {
         debug {
-            isMinifyEnabled = true
-            isShrinkResources = false
-
-            @Suppress("UnstableApiUsage")
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+            resValue("string", "banner_id", "ca-app-pub-3940256099942544/6300978111")
+            resValue("string", "foreground_id", "ca-app-pub-3940256099942544/1033173712")
         }
         release {
             isMinifyEnabled = true
@@ -51,6 +42,12 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+
+            val bannerId: String = properties.getProperty("google.ads.banner.id")
+            val foregroundId: String = properties.getProperty("google.ads.foreground.id")
+
+            resValue("string", "banner_id", bannerId)
+            resValue("string", "foreground_id", foregroundId)
         }
     }
     compileOptions {
