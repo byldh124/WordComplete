@@ -8,6 +8,7 @@ import android.view.View
 import android.view.animation.Animation
 import android.view.animation.Animation.AnimationListener
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.gson.Gson
@@ -61,6 +62,10 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
                         when (it.code) {
                             Constants.ResponseCode.INACTIVE -> {
                                 update()
+                            }
+
+                            Constants.ResponseCode.NOT_EXIST -> {
+                                Toast.makeText(mContext, "존재하지 않는 버전입니다.", Toast.LENGTH_SHORT).show()
                             }
 
                             else -> {
