@@ -1,5 +1,7 @@
 package com.moondroid.wordcomplete.view
 
+import android.os.Bundle
+import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.FullScreenContentCallback
@@ -9,11 +11,16 @@ import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.moondroid.wordcomplete.R
 import com.moondroid.wordcomplete.data.model.Item
 import com.moondroid.wordcomplete.utils.Extension.debug
+import com.moondroid.wordcomplete.utils.ItemHelper
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
-    var items: ArrayList<Item>? = null
 
-    fun showAd(onFinished: () -> Unit) {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        ItemHelper.init(this)
+    }
+
+    /*fun showAd(onFinished: () -> Unit) {
         try {
             InterstitialAd.load(
                 this,
@@ -38,5 +45,5 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-    }
+    }*/
 }

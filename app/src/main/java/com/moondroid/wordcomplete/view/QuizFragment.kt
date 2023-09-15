@@ -27,6 +27,7 @@ import com.moondroid.wordcomplete.utils.Extension.dpToPixel
 import com.moondroid.wordcomplete.utils.Extension.getDrawableId
 import com.moondroid.wordcomplete.utils.Extension.shuffle
 import com.moondroid.wordcomplete.utils.Extension.visible
+import com.moondroid.wordcomplete.utils.ItemHelper
 import java.util.Locale
 
 class QuizFragment : Fragment(R.layout.fragment_quiz) {
@@ -36,10 +37,6 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
     private var clickSound: MediaPlayer? = null
     private var correctSound: MediaPlayer? = null
     private var incorrectSound: MediaPlayer? = null
-
-    private val items by lazy {
-        mContext.items ?: throw IllegalStateException()
-    }
 
     private val textPadding by lazy {
         dpToPixel(mContext, 8)
@@ -117,6 +114,7 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
      * 아이템 세팅
      **/
     private fun setItem(stage: Int) {
+        val items = ItemHelper.getItems(mContext)
         if (stage > items.lastIndex) {
             this@QuizFragment.stage = 0
             items.shuffle()
@@ -178,11 +176,12 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
                     tts.speak(name, TextToSpeech.QUEUE_FLUSH, null, "uid")
                 }, DELAY_OF_RIGHT_SOUND)
 
-                if (stage != 0 && stage % FOREGROUND_AD_INTERVAL == 0) {
+                handler.postDelayed({ setItem(++stage) }, DELAY_OF_TTS)
+                /*if (stage != 0 && stage % FOREGROUND_AD_INTERVAL == 0) {
                     mContext.showAd { setItem(++stage) }
                 } else {
                     handler.postDelayed({ setItem(++stage) }, DELAY_OF_TTS)
-                }
+                }*/
             }
         } else {
             binding.ivCorrect.apply {

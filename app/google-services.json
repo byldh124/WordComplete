@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "239882554238",
+    "project_id": "wordcomplete-67bf1",
+    "storage_bucket": "wordcomplete-67bf1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:239882554238:android:1bb66cb6110907a341812f",
+        "android_client_info": {
+          "package_name": "com.moondroid.bombgame"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "239882554238-1adhvvcbq140abhfdsoa5vgk4i4l7trh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcjcNi3GQzUrtoxu9GvNaONFpwA3Zd9Qw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "239882554238-1adhvvcbq140abhfdsoa5vgk4i4l7trh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:239882554238:android:d099d4d3bbafff7141812f",
+        "android_client_info": {
+          "package_name": "com.moondroid.wordcomplete"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "239882554238-1adhvvcbq140abhfdsoa5vgk4i4l7trh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcjcNi3GQzUrtoxu9GvNaONFpwA3Zd9Qw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "239882554238-1adhvvcbq140abhfdsoa5vgk4i4l7trh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

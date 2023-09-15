@@ -4,5 +4,5 @@
     <string name="cmn_confirm">확인</string>
     <string name="cmn_listen">듣기</string>
     <string name="cmn_delete">지우기</string>
-    <string name="cmn_reset">다시하기</string>
+    <string name="cmn_reset">넘어가기</string>
 </resources>

@@ -64,7 +64,7 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
                             }
 
                             else -> {
-                                getItems()
+                                binding.btnStart.isEnabled = true
                             }
                         }
                     }
@@ -73,7 +73,7 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
 
             override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
                 debug("checkAppVersion onFailure ${t.stackTraceToString()}")
-                getItems()
+                binding.btnStart.isEnabled = true
             }
         })
     }
@@ -112,22 +112,6 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
 
         binding.btnStart.setOnClickListener {
             findNavController().navigate(SplashFragmentDirections.splashToQuiz())
-        }
-    }
-
-    private fun getItems() {
-        val assetManager = resources.assets
-        val inputStream = assetManager.open("word.json")
-        val reader = inputStream.bufferedReader()
-        val result =
-            Gson().fromJson<ArrayList<Item>>(reader, object : TypeToken<ArrayList<Item>>() {}.type)
-        if (!result.isNullOrEmpty()) {
-            mContext.items = result
-            result.shuffle()
-            binding.btnStart.isEnabled = true
-            debug("Item size : ${result.size}")
-        } else {
-            throw IllegalStateException("item is null")
         }
     }
 }
