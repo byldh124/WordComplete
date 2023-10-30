@@ -7,7 +7,6 @@
 https://play.google.com/store/apps/details?id=com.moondroid.wordcomplete
 
 ### Sample
-![image](https://github.com/byldh124/WordComplete/assets/78577050/00ea7718-13eb-412c-aea4-3305725c9dfd)
-![image](https://github.com/byldh124/WordComplete/assets/78577050/21266171-b303-4df4-bf7f-b2f89ab051d4)
-![image](https://github.com/byldh124/WordComplete/assets/78577050/709633a8-5771-4243-bfaf-a23726238346)
+![image](https://github.com/byldh124/WordComplete/assets/78577050/21dd82f4-38cb-45fa-a50a-2dda978f7baa)
+
 
