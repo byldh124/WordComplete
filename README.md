@@ -6,7 +6,7 @@
 
 https://play.google.com/store/apps/details?id=com.moondroid.wordcomplete
 
-### Sample
+### Sceen Shots
 ![image](https://github.com/byldh124/WordComplete/assets/78577050/21dd82f4-38cb-45fa-a50a-2dda978f7baa)
 
 
