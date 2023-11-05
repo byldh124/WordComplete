@@ -115,7 +115,7 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
      **/
     private fun setItem(stage: Int) {
         val items = ItemHelper.getItems(mContext)
-        if (stage > items.lastIndex) {
+        if (stage >= items.lastIndex) {
             this@QuizFragment.stage = 0
             items.shuffle()
         }

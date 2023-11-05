@@ -15,6 +15,7 @@ object ItemHelper {
         val inputStream = assetManager.open("word.json")
         val reader = inputStream.bufferedReader()
         items = Gson().fromJson<ArrayList<Item>>(reader, object : TypeToken<ArrayList<Item>>() {}.type)
+        items?.shuffle()
         debug("items: $items")
     }
 
@@ -34,6 +35,5 @@ object ItemHelper {
         } else {
             items!!
         }
-
     }
 }

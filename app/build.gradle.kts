@@ -18,8 +18,8 @@ android {
         applicationId = "com.moondroid.wordcomplete"
         minSdk = 21
         targetSdk = 34
-        versionCode = 14
-        versionName = "1.2.3"
+        versionCode = 16
+        versionName = "1.2.5"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -37,7 +37,6 @@ android {
             isMinifyEnabled = true
             isShrinkResources = false
 
-            @Suppress("UnstableApiUsage")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
