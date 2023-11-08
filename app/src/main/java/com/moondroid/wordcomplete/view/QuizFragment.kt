@@ -5,6 +5,8 @@ import android.app.ActionBar.LayoutParams
 import android.content.Context
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.speech.tts.TextToSpeech
 import android.util.TypedValue
 import android.view.Gravity
@@ -61,7 +63,7 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
-        setItem(stage)
+        setItem()
     }
 
     private fun init() {
@@ -96,7 +98,8 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
         }
 
         binding.icReset.setOnClickListener {
-            setItem(++stage)
+            ++stage
+            setItem()
         }
 
         binding.icBack.setOnClickListener {
@@ -113,11 +116,10 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
     /**
      * 아이템 세팅
      **/
-    private fun setItem(stage: Int) {
-        val items = ItemHelper.getItems(mContext)
-        if (stage >= items.lastIndex) {
-            this@QuizFragment.stage = 0
-            items.shuffle()
+    private fun setItem() {
+        if (stage > ItemHelper.items.lastIndex) {
+            stage = 0
+            ItemHelper.items.shuffle()
         }
 
         // View 초기화
@@ -128,17 +130,17 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
         binding.ivCorrect.visible(false)
 
         // 아이템 세팅
-        val item = items[stage]
+        val item = ItemHelper.items[stage]
 
         // 이미지 로드
-        val resName = String.format("image%03d", item.index)
-        val drawable = ContextCompat.getDrawable(mContext, mContext.getDrawableId(resName))
-        Glide.with(mContext).load(drawable).into(binding.ivQuiz)
+        //val resName = String.format("image%03d", item.index)
+        //val drawable = ContextCompat.getDrawable(mContext, mContext.getDrawableId(resName))
+        Glide.with(mContext).load(item.getImage()).into(binding.ivQuiz)
 
         // 알파벳 버튼
-        binding.ko = item.ko
+        binding.ko = item.kor
         binding.utilsEnable = true
-        name = item.en
+        name = item.eng
         val name = name.shuffle()
 
         if (name.length <= 5) {
@@ -176,7 +178,10 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
                     tts.speak(name, TextToSpeech.QUEUE_FLUSH, null, "uid")
                 }, DELAY_OF_RIGHT_SOUND)
 
-                handler.postDelayed({ setItem(++stage) }, DELAY_OF_TTS)
+                handler.postDelayed({
+                    ++stage
+                    setItem()
+                }, DELAY_OF_TTS)
                 /*if (stage != 0 && stage % FOREGROUND_AD_INTERVAL == 0) {
                     mContext.showAd { setItem(++stage) }
                 } else {
@@ -189,7 +194,7 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
                 visible()
                 startAnimation(shakeAnim)
                 incorrectSound?.start()
-                handler.postDelayed({ setItem(stage) }, DELAY_OF_RIGHT_SOUND)
+                handler.postDelayed({ setItem() }, DELAY_OF_RIGHT_SOUND)
             }
         }
     }

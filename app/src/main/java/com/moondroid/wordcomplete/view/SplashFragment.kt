@@ -11,12 +11,14 @@ import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.moondroid.wordcomplete.BuildConfig
 import com.moondroid.wordcomplete.R
 import com.moondroid.wordcomplete.data.model.BaseResponse
 import com.moondroid.wordcomplete.data.model.Item
+import com.moondroid.wordcomplete.data.model.ItemResponse
 import com.moondroid.wordcomplete.databinding.FragmentSplashBinding
 import com.moondroid.wordcomplete.delegate.viewBinding
 import com.moondroid.wordcomplete.network.MyRetrofit
@@ -24,6 +26,8 @@ import com.moondroid.wordcomplete.network.RetrofitExService
 import com.moondroid.wordcomplete.utils.Constants
 import com.moondroid.wordcomplete.utils.Extension.debug
 import com.moondroid.wordcomplete.utils.Extension.visible
+import com.moondroid.wordcomplete.utils.ItemHelper
+import com.moondroid.wordcomplete.utils.firebase.FBCrash
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -42,8 +46,6 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        debug("onViewCreated api call")
-
         checkAppVersion()
         initView()
     }
@@ -58,7 +60,6 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
             override fun onResponse(call: Call<BaseResponse>, response: Response<BaseResponse>) {
                 if (response.isSuccessful) {
                     response.body()?.let {
-                        debug("response : $it")
                         when (it.code) {
                             Constants.ResponseCode.INACTIVE -> {
                                 update()
@@ -69,7 +70,8 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
                             }
 
                             else -> {
-                                binding.btnStart.isEnabled = true
+                                setItems()
+
                             }
                         }
                     }
@@ -77,8 +79,37 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
             }
 
             override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
-                debug("checkAppVersion onFailure ${t.stackTraceToString()}")
-                binding.btnStart.isEnabled = true
+                FBCrash.logException(t)
+                setItems()
+            }
+        })
+    }
+
+    private fun setItems() {
+        val service = MyRetrofit.retrofit.create(RetrofitExService::class.java)
+        service.getItems().enqueue(object : Callback<ItemResponse> {
+            override fun onResponse(call: Call<ItemResponse>, response: Response<ItemResponse>) {
+                response.body()?.let {
+                    ItemHelper.items = ArrayList(it.body)
+                    ItemHelper.items.shuffle()
+                    debug("ITEMS : ${ItemHelper.items}")
+                    binding.btnStart.isEnabled = true
+                }
+            }
+
+            override fun onFailure(call: Call<ItemResponse>, t: Throwable) {
+                val message = "게임을 진행할 수 없습니다."
+                val onClick: () -> Unit = {
+                    activity?.finish()
+                }
+                FBCrash.logException(t)
+                oneButtonDialog?.let {
+                    it.msg = message
+                    it.onClick = onClick
+                } ?: run {
+                    oneButtonDialog = OneButtonDialog(mContext, message, onClick)
+                }
+                oneButtonDialog?.show()
             }
         })
     }

@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        ItemHelper.init(this)
+        //ItemHelper.init(this)
     }
 
     /*fun showAd(onFinished: () -> Unit) {

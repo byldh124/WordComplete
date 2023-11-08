@@ -1,7 +1,8 @@
 package com.moondroid.wordcomplete.data.model
 
 data class Item(
-    val index : Int,
-    val en : String,
-    val ko: String
-)
+    val eng: String,
+    val kor: String,
+) {
+    fun getImage(): String = "http://moondroid.dothome.co.kr/wordcomplete/image/${eng}.png"
+}

@@ -16,7 +16,7 @@ object MyRetrofit {
     val retrofit: Retrofit
         get() {
             return Retrofit.Builder()
-                .baseUrl("http://moondroid.dothome.co.kr/damoim/")
+                .baseUrl("http://moondroid.dothome.co.kr/wordcomplete/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(getUnsafeOkHttpClient())
                 .build()
