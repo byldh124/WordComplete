@@ -1,25 +1,17 @@
 package com.moondroid.wordcomplete.view
 
-import android.content.Context
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.View
 import android.view.animation.Animation
-import android.view.animation.Animation.AnimationListener
 import android.view.animation.AnimationUtils
 import android.widget.Toast
-import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import com.bumptech.glide.Glide
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.moondroid.wordcomplete.BuildConfig
 import com.moondroid.wordcomplete.R
 import com.moondroid.wordcomplete.data.model.BaseResponse
-import com.moondroid.wordcomplete.data.model.Item
 import com.moondroid.wordcomplete.data.model.ItemResponse
-import com.moondroid.wordcomplete.databinding.FragmentSplashBinding
+import com.moondroid.wordcomplete.databinding.ActivitySplashBinding
 import com.moondroid.wordcomplete.delegate.viewBinding
 import com.moondroid.wordcomplete.network.MyRetrofit
 import com.moondroid.wordcomplete.network.RetrofitExService
@@ -32,20 +24,14 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+@SuppressLint("CustomSplashScreen")
+class SplashActivity : BaseActivity() {
 
-class SplashFragment : Fragment(R.layout.fragment_splash) {
-    private val binding by viewBinding(FragmentSplashBinding::bind)
-    private lateinit var mContext: MainActivity
-
+    private val binding by viewBinding(ActivitySplashBinding::inflate)
     private var oneButtonDialog: OneButtonDialog? = null
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        mContext = context as MainActivity
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         checkAppVersion()
         initView()
     }
@@ -71,7 +57,6 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
 
                             else -> {
                                 setItems()
-
                             }
                         }
                     }
@@ -90,8 +75,8 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
         service.getItems().enqueue(object : Callback<ItemResponse> {
             override fun onResponse(call: Call<ItemResponse>, response: Response<ItemResponse>) {
                 response.body()?.let {
-                    ItemHelper.items = ArrayList(it.body)
-                    ItemHelper.items.shuffle()
+                    ItemHelper.items = it.body
+                    ItemHelper.shuffle()
                     debug("ITEMS : ${ItemHelper.items}")
                     binding.btnStart.isEnabled = true
                 }
@@ -99,9 +84,7 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
 
             override fun onFailure(call: Call<ItemResponse>, t: Throwable) {
                 val message = "게임을 진행할 수 없습니다."
-                val onClick: () -> Unit = {
-                    activity?.finish()
-                }
+                val onClick: () -> Unit = ::finish
                 FBCrash.logException(t)
                 oneButtonDialog?.let {
                     it.msg = message
@@ -134,7 +117,7 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
         val animation = AnimationUtils.loadAnimation(mContext, R.anim.fade_in)
         binding.logo.startAnimation(animation)
 
-        animation.setAnimationListener(object : AnimationListener {
+        animation.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationStart(animation: Animation?) {
             }
 
@@ -147,7 +130,8 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
         })
 
         binding.btnStart.setOnClickListener {
-            findNavController().navigate(SplashFragmentDirections.splashToQuiz())
+            startActivity(Intent(mContext, MainActivity::class.java))
+            finish()
         }
     }
 }

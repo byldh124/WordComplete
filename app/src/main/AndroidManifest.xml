@@ -17,7 +17,7 @@
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="${googleAdsAppId}"/>
 
-        <activity android:name=".view.MainActivity"
+        <activity android:name=".view.SplashActivity"
             android:exported="true"
             android:hardwareAccelerated="true"
             android:screenOrientation="portrait">
@@ -27,6 +27,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".view.MainActivity"
+            android:exported="false"/>
     </application>
 
 </manifest>

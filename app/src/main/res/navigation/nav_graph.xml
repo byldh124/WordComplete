@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.moondroid.wordcomplete.view.SplashFragment"
-        tools:layout="@layout/fragment_splash">
+        tools:layout="@layout/activity_splash">
 
         <action
             android:id="@+id/splash_to_quiz"
@@ -22,6 +22,6 @@
     <fragment
         android:id="@+id/quizFragment"
         android:name="com.moondroid.wordcomplete.view.QuizFragment"
-        tools:layout="@layout/fragment_quiz"/>
+        tools:layout="@layout/activity_main"/>
 
 </navigation>
