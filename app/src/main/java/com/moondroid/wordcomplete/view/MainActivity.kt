@@ -62,7 +62,6 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         init()
-        checkItem()
     }
 
     override fun onResume() {
