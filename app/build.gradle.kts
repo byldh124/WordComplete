@@ -18,8 +18,8 @@ android {
         applicationId = "com.moondroid.wordcomplete"
         minSdk = 21
         targetSdk = 34
-        versionCode = 20
-        versionName = "1.2.9"
+        versionCode = 21
+        versionName = "1.2.10"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -32,6 +32,14 @@ android {
 
     buildTypes {
         debug {
+            isMinifyEnabled = true
+            isShrinkResources = false
+
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+
             resValue("string", "banner_id", "ca-app-pub-3940256099942544/6300978111")
             resValue("string", "foreground_id", "ca-app-pub-3940256099942544/1033173712")
         }
