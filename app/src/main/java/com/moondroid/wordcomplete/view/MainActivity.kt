@@ -18,24 +18,29 @@ import com.bumptech.glide.Glide
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.moondroid.wordcomplete.R
-import com.moondroid.wordcomplete.data.model.ItemResponse
 import com.moondroid.wordcomplete.databinding.ActivityMainBinding
 import com.moondroid.wordcomplete.delegate.viewBinding
-import com.moondroid.wordcomplete.network.MyRetrofit
-import com.moondroid.wordcomplete.network.RetrofitExService
+import com.moondroid.wordcomplete.domain.model.onError
+import com.moondroid.wordcomplete.domain.model.onSuccess
+import com.moondroid.wordcomplete.domain.respository.Repository
 import com.moondroid.wordcomplete.utils.Extension
 import com.moondroid.wordcomplete.utils.Extension.afterTextChanged
-import com.moondroid.wordcomplete.utils.Extension.debug
 import com.moondroid.wordcomplete.utils.Extension.shuffle
 import com.moondroid.wordcomplete.utils.Extension.visible
 import com.moondroid.wordcomplete.utils.ItemHelper
 import com.moondroid.wordcomplete.utils.firebase.FBCrash
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.Locale
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : BaseActivity() {
+
+    @Inject
+    lateinit var repository: Repository
 
     private val binding by viewBinding(ActivityMainBinding::inflate)
     private var oneButtonDialog: OneButtonDialog? = null
@@ -61,7 +66,6 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        MobileAds.initialize(mContext)
         init()
     }
 
@@ -76,30 +80,28 @@ class MainActivity : BaseActivity() {
     }
 
     private fun getItems() {
-        val service = MyRetrofit.retrofit.create(RetrofitExService::class.java)
-        service.getItems().enqueue(object : Callback<ItemResponse> {
-            override fun onResponse(call: Call<ItemResponse>, response: Response<ItemResponse>) {
-                response.body()?.let {
-                    ItemHelper.items = it.body
-                    ItemHelper.shuffle()
-                    debug("ITEMS : ${ItemHelper.items}")
-                    setItem()
-                }
-            }
+        CoroutineScope(Dispatchers.Main).launch {
+            repository.getItem().collect { result ->
+                result
+                    .onSuccess {
+                        ItemHelper.items = it
+                        ItemHelper.shuffle()
+                        setItem()
+                    }.onError { t ->
+                        val message = "게임을 진행할 수 없습니다."
+                        val onClick: () -> Unit = ::finish
+                        FBCrash.logException(t)
+                        oneButtonDialog?.let {
+                            it.msg = message
+                            it.onClick = onClick
+                        } ?: run {
+                            oneButtonDialog = OneButtonDialog(mContext, message, onClick)
+                        }
+                        oneButtonDialog?.show()
+                    }
 
-            override fun onFailure(call: Call<ItemResponse>, t: Throwable) {
-                val message = "게임을 진행할 수 없습니다."
-                val onClick: () -> Unit = ::finish
-                FBCrash.logException(t)
-                oneButtonDialog?.let {
-                    it.msg = message
-                    it.onClick = onClick
-                } ?: run {
-                    oneButtonDialog = OneButtonDialog(mContext, message, onClick)
-                }
-                oneButtonDialog?.show()
             }
-        })
+        }
     }
 
     private fun init() {

@@ -4,30 +4,31 @@ import android.annotation.SuppressLint
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
 import com.google.android.gms.ads.MobileAds
-import com.moondroid.wordcomplete.network.MyRetrofit
-import com.moondroid.wordcomplete.network.PostMessageRequest
-import com.moondroid.wordcomplete.network.SlackApiService
-import com.moondroid.wordcomplete.utils.Extension.debug
+import com.moondroid.wordcomplete.domain.respository.Repository
 import com.moondroid.wordcomplete.utils.Preferences
 import com.moondroid.wordcomplete.utils.firebase.FBAnalyze
+import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.Date
+import javax.inject.Inject
 
+@HiltAndroidApp
 class MyApplication : Application() {
+    @Inject
+    lateinit var repository: Repository
+
     override fun onCreate() {
         super.onCreate()
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-
         FBAnalyze.init(applicationContext)
-        //MobileAds.initialize(applicationContext)
+        MobileAds.initialize(applicationContext)
         Preferences.init(applicationContext)
-        //if (!BuildConfig.DEBUG) {
+        if (!BuildConfig.DEBUG) {
             postMessage()
-        //}
+        }
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -41,12 +42,7 @@ class MyApplication : Application() {
                 "[${getString(R.string.app_name)} - 기존]"
             }
             val token = "Bearer ${getString(R.string.slack_token)}"
-            val postMessageRequest =
-                PostMessageRequest("C06H55PNMSN", "$prefix\n사용자가 들어왔습니다. $date")
-            val service = MyRetrofit.slack.create(SlackApiService::class.java)
-            withContext(Dispatchers.IO) {
-                service.postMessage(token, postMessageRequest)
-            }
+            repository.postMessage(token, "$prefix\n사용자가 들어왔습니다. $date")
         }
     }
 }

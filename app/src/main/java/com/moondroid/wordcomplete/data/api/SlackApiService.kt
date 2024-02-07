@@ -1,5 +1,6 @@
-package com.moondroid.wordcomplete.network
+package com.moondroid.wordcomplete.data.api
 
+import com.moondroid.wordcomplete.data.model.request.PostMessageRequest
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Header

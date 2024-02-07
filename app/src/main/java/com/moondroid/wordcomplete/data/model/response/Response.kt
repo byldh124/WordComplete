@@ -1,8 +1,10 @@
-package com.moondroid.wordcomplete.data.model
+package com.moondroid.wordcomplete.data.model.response
 
-import com.google.gson.JsonElement
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
+import com.moondroid.wordcomplete.domain.model.Item
 
+@Keep
 data class BaseResponse(
     @SerializedName("message")
     val msg: String,
@@ -10,6 +12,7 @@ data class BaseResponse(
     val code: Int
 )
 
+@Keep
 data class ItemResponse(
     @SerializedName("result")
     val body: List<Item>,

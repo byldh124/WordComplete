@@ -1,6 +1,6 @@
 package com.moondroid.wordcomplete.utils
 
-import com.moondroid.wordcomplete.data.model.Item
+import com.moondroid.wordcomplete.domain.model.Item
 
 object ItemHelper {
     var items: List<Item> = emptyList()

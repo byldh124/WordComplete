@@ -3,9 +3,10 @@ import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("androidx.navigation.safeargs.kotlin")
-    id("com.google.firebase.crashlytics")
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
     id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 val properties = gradleLocalProperties(rootDir)
@@ -18,8 +19,8 @@ android {
         applicationId = "com.moondroid.wordcomplete"
         minSdk = 21
         targetSdk = 34
-        versionCode = 21
-        versionName = "1.2.10"
+        versionCode = 22
+        versionName = "1.2.11"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -32,14 +33,6 @@ android {
 
     buildTypes {
         debug {
-            isMinifyEnabled = true
-            isShrinkResources = false
-
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-
             resValue("string", "banner_id", "ca-app-pub-3940256099942544/6300978111")
             resValue("string", "foreground_id", "ca-app-pub-3940256099942544/1033173712")
         }
@@ -98,6 +91,11 @@ dependencies {
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.11")
+
+    // dagger hilt
+    implementation("com.google.dagger:hilt-android:2.47")
+    kapt("com.google.dagger:hilt-android-compiler:2.47")
 
     // okhttp3
     implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.11")
@@ -106,4 +104,8 @@ dependencies {
     implementation("com.google.firebase:firebase-crashlytics-ktx")
     implementation("com.google.firebase:firebase-analytics-ktx")
 
+}
+
+kapt {
+    correctErrorTypes = true
 }

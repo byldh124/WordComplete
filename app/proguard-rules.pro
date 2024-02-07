@@ -99,7 +99,7 @@
 
 ##---------------End: proguard configuration for Gson  ----------
 
--keep class com.moondroid.wordcomplete.data.model.** { *; }
+-keep class com.moondroid.wordcomplete.domain.model.** { *; }
 
 -keep class retrofit2.** { *; }
 -keep interface retrofit2.** { *; }

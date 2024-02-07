@@ -1,4 +1,4 @@
-package com.moondroid.wordcomplete.data.model
+package com.moondroid.wordcomplete.domain.model
 
 data class Item(
     val eng: String,
