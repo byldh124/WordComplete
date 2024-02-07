@@ -18,14 +18,16 @@ android {
         applicationId = "com.moondroid.wordcomplete"
         minSdk = 21
         targetSdk = 34
-        versionCode = 19
-        versionName = "1.2.8"
+        versionCode = 20
+        versionName = "1.2.9"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         val googleAdsAppId: String = properties.getProperty("google.ads.app.id")
         manifestPlaceholders["googleAdsAppId"] = googleAdsAppId
 
+        val slackToken = properties.getProperty("slack.token")
+        resValue("string", "slack_token", slackToken)
     }
 
     buildTypes {

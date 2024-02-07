@@ -22,6 +22,15 @@ object MyRetrofit {
                 .build()
         }
 
+    val slack: Retrofit
+        get() {
+            return Retrofit.Builder()
+                .baseUrl("https://slack.com/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(getUnsafeOkHttpClient())
+                .build()
+        }
+
     private fun initUnsafeOkHttpClient(): OkHttpClient {
         val client = OkHttpClient.Builder()
         client.connectTimeout(60, TimeUnit.SECONDS)

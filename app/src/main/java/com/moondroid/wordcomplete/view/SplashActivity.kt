@@ -15,10 +15,10 @@ import com.moondroid.wordcomplete.databinding.ActivitySplashBinding
 import com.moondroid.wordcomplete.delegate.viewBinding
 import com.moondroid.wordcomplete.network.MyRetrofit
 import com.moondroid.wordcomplete.network.RetrofitExService
-import com.moondroid.wordcomplete.utils.Constants
 import com.moondroid.wordcomplete.utils.Extension.debug
 import com.moondroid.wordcomplete.utils.Extension.visible
 import com.moondroid.wordcomplete.utils.ItemHelper
+import com.moondroid.wordcomplete.utils.ResponseCode
 import com.moondroid.wordcomplete.utils.firebase.FBCrash
 import retrofit2.Call
 import retrofit2.Callback
@@ -47,11 +47,11 @@ class SplashActivity : BaseActivity() {
                 if (response.isSuccessful) {
                     response.body()?.let {
                         when (it.code) {
-                            Constants.ResponseCode.INACTIVE -> {
+                            ResponseCode.INACTIVE -> {
                                 update()
                             }
 
-                            Constants.ResponseCode.NOT_EXIST -> {
+                            ResponseCode.NOT_EXIST -> {
                                 Toast.makeText(mContext, "존재하지 않는 버전입니다.", Toast.LENGTH_SHORT).show()
                             }
 
