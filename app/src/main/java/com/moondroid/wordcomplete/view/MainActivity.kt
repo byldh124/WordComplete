@@ -28,7 +28,9 @@ import com.moondroid.wordcomplete.utils.Extension.afterTextChanged
 import com.moondroid.wordcomplete.utils.Extension.shuffle
 import com.moondroid.wordcomplete.utils.Extension.visible
 import com.moondroid.wordcomplete.utils.ItemHelper
+import com.moondroid.wordcomplete.utils.NetworkConnection
 import com.moondroid.wordcomplete.utils.firebase.FBCrash
+import com.moondroid.wordcomplete.view.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -71,7 +73,9 @@ class MainActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        checkItem()
+        NetworkConnection.observe(this) {
+            if (it) checkItem()
+        }
     }
 
     private fun checkItem() {

@@ -6,6 +6,7 @@ import com.moondroid.wordcomplete.data.model.request.PostMessageRequest
 import com.moondroid.wordcomplete.domain.model.ApiResult
 import com.moondroid.wordcomplete.domain.model.Item
 import com.moondroid.wordcomplete.domain.respository.Repository
+import com.moondroid.wordcomplete.utils.firebase.FBCrash
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -23,20 +24,17 @@ class RepositoryImpl @Inject constructor(
         versionName: String,
         packageName: String,
     ): Flow<ApiResult<Int>> {
-        return flow<ApiResult<Int>> {
+        return flow {
             try {
                 val response = mApiService.checkAppVersion(versionCode, versionName, packageName)
                 if (response.isSuccessful && response.body() != null) {
                     emit(ApiResult.Success(response.body()!!.code))
-
                 } else {
                     emit(ApiResult.Fail(response.message()))
                 }
             } catch (e: Exception) {
                 emit(ApiResult.Error(e))
             }
-
-
         }.flowOn(Dispatchers.IO)
     }
 
@@ -56,6 +54,10 @@ class RepositoryImpl @Inject constructor(
     }
 
     override suspend fun postMessage(token: String, message: String) {
-        slackApiService.postMessage(token, PostMessageRequest("C06H55PNMSN", message))
+        try {
+            slackApiService.postMessage(token, PostMessageRequest("C06H55PNMSN", message))
+        } catch (e: Exception) {
+            FBCrash.logException(e)
+        }
     }
 }

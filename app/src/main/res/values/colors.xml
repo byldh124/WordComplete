@@ -14,4 +14,7 @@
 
     <color name="orange_01">#f58f00</color>
     <color name="orange_02">#C8790A</color>
+
+    <color name="dialog">#66000000</color>
+    <color name="default_text">#1f1f1f</color>
 </resources>

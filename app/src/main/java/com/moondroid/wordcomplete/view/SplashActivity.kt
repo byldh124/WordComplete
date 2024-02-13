@@ -16,10 +16,11 @@ import com.moondroid.wordcomplete.domain.model.onSuccess
 import com.moondroid.wordcomplete.domain.respository.Repository
 import com.moondroid.wordcomplete.utils.Extension.visible
 import com.moondroid.wordcomplete.utils.ItemHelper
+import com.moondroid.wordcomplete.utils.NetworkConnection
 import com.moondroid.wordcomplete.utils.ResponseCode
 import com.moondroid.wordcomplete.utils.firebase.FBCrash
+import com.moondroid.wordcomplete.view.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -37,8 +38,14 @@ class SplashActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        checkAppVersion()
         initView()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        NetworkConnection.observe(this) {
+            if (it) checkAppVersion()
+        }
     }
 
     private fun checkAppVersion() {

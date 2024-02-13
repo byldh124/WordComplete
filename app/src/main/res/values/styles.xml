@@ -12,8 +12,10 @@
 
     <!-- 다이얼로그 -->
     <style name="DialogTheme">
-        <item name="android:windowFullscreen">true</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowBackground">@color/dialog</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowMinWidthMajor">90%</item>
+        <item name="android:windowMinWidthMinor">90%</item>
     </style>
+
 </resources>

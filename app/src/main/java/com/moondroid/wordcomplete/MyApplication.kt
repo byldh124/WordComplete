@@ -2,9 +2,11 @@ package com.moondroid.wordcomplete
 
 import android.annotation.SuppressLint
 import android.app.Application
+import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
 import com.google.android.gms.ads.MobileAds
 import com.moondroid.wordcomplete.domain.respository.Repository
+import com.moondroid.wordcomplete.utils.NetworkConnection
 import com.moondroid.wordcomplete.utils.Preferences
 import com.moondroid.wordcomplete.utils.firebase.FBAnalyze
 import dagger.hilt.android.HiltAndroidApp
@@ -26,6 +28,7 @@ class MyApplication : Application() {
         FBAnalyze.init(applicationContext)
         MobileAds.initialize(applicationContext)
         Preferences.init(applicationContext)
+        NetworkConnection.init(applicationContext)
         if (!BuildConfig.DEBUG) {
             postMessage()
         }

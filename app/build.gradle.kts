@@ -17,10 +17,10 @@ android {
 
     defaultConfig {
         applicationId = "com.moondroid.wordcomplete"
-        minSdk = 21
+        minSdk = 23
         targetSdk = 34
-        versionCode = 22
-        versionName = "1.2.11"
+        versionCode = 23
+        versionName = "1.2.12"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -103,6 +103,9 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:32.1.0"))
     implementation("com.google.firebase:firebase-crashlytics-ktx")
     implementation("com.google.firebase:firebase-analytics-ktx")
+
+    // lottie for animation
+    implementation ("com.airbnb.android:lottie:6.3.0")
 
 }
 
