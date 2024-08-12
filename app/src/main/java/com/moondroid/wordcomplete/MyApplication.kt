@@ -2,7 +2,6 @@ package com.moondroid.wordcomplete
 
 import android.annotation.SuppressLint
 import android.app.Application
-import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
 import com.google.android.gms.ads.MobileAds
 import com.moondroid.wordcomplete.domain.respository.Repository

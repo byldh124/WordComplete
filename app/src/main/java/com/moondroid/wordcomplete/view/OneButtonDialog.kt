@@ -9,7 +9,7 @@ import com.moondroid.wordcomplete.databinding.DialogOneButtonBinding
 class OneButtonDialog(context: Context, var msg: String, var onClick: () -> Unit) :
     Dialog(context, R.style.DialogTheme) {
 
-    lateinit var binding: DialogOneButtonBinding
+    private lateinit var binding: DialogOneButtonBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

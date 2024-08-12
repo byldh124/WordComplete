@@ -25,7 +25,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideHttpClient(): OkHttpClient = if (true) {
+    fun provideHttpClient(): OkHttpClient = if (BuildConfig.DEBUG) {
         val loggingInterceptor = HttpLoggingInterceptor {
             val log = try {
                 JSONObject(it).toString()
@@ -46,7 +46,7 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideGsonConverterFactory(): GsonConverterFactory {
-        return GsonConverterFactory.create(GsonBuilder().setLenient().create())
+        return GsonConverterFactory.create(GsonBuilder().create())
     }
 
     @Singleton
