@@ -12,20 +12,20 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import kotlin.math.acosh
 
-object NetworkConnection: LiveData<Boolean>() {
+object NetworkConnection : LiveData<Boolean>() {
     private lateinit var connectivityManager: ConnectivityManager
     private lateinit var networkCallback: ConnectivityManager.NetworkCallback
 
     fun init(context: Context) {
         connectivityManager = context.getSystemService(ConnectivityManager::class.java)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            connectivityManager.registerDefaultNetworkCallback(connectivityManagerCallback())
+        }
     }
 
     override fun onActive() {
         super.onActive()
-        postValue(updateConnection())
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            connectivityManager.registerDefaultNetworkCallback(connectivityManagerCallback())
-        }
+        changeValue(updateConnection())
     }
 
     private fun updateConnection(): Boolean {
@@ -58,5 +58,11 @@ object NetworkConnection: LiveData<Boolean>() {
             }
         }
         return networkCallback
+    }
+
+    private fun changeValue(newValue: Boolean) {
+        if (value != null && value != newValue) {
+            postValue(value)
+        }
     }
 }

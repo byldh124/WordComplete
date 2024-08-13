@@ -14,12 +14,15 @@ import com.moondroid.wordcomplete.delegate.viewBinding
 import com.moondroid.wordcomplete.domain.model.onError
 import com.moondroid.wordcomplete.domain.model.onSuccess
 import com.moondroid.wordcomplete.domain.respository.Repository
+import com.moondroid.wordcomplete.utils.Extension.debug
 import com.moondroid.wordcomplete.utils.Extension.visible
 import com.moondroid.wordcomplete.utils.ItemHelper
 import com.moondroid.wordcomplete.utils.NetworkConnection
 import com.moondroid.wordcomplete.utils.ResponseCode
 import com.moondroid.wordcomplete.utils.firebase.FBCrash
 import com.moondroid.wordcomplete.view.base.BaseActivity
+import com.moondroid.wordcomplete.view.base.isShow
+import com.moondroid.wordcomplete.view.dialog.DisconnectNetworkDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -29,12 +32,12 @@ import javax.inject.Inject
 @SuppressLint("CustomSplashScreen")
 @AndroidEntryPoint
 class SplashActivity : BaseActivity() {
-
     @Inject
     lateinit var repository: Repository
 
     private val binding by viewBinding(ActivitySplashBinding::inflate)
     private var oneButtonDialog: OneButtonDialog? = null
+    private val disconnectNetworkDialog by lazy { DisconnectNetworkDialog(mContext) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,9 +46,22 @@ class SplashActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        NetworkConnection.observe(this) {
-            if (it) checkAppVersion()
+        debug("onResume()-called()")
+        NetworkConnection.observe(this, ::networkObserve)
+    }
+
+    private fun networkObserve(networkConnected: Boolean) {
+        disconnectNetworkDialog.isShow = !networkConnected
+        if (networkConnected) {
+            debug("check app version()")
+            checkAppVersion()
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        debug("onPause called()")
+        NetworkConnection.removeObservers(this)
     }
 
     private fun checkAppVersion() {

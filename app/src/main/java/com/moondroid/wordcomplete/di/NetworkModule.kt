@@ -2,6 +2,7 @@ package com.moondroid.wordcomplete.di
 
 import android.util.Log
 import com.google.gson.GsonBuilder
+import com.google.gson.Strictness
 import com.moondroid.wordcomplete.BuildConfig
 import com.moondroid.wordcomplete.data.api.MyApiService
 import com.moondroid.wordcomplete.data.api.SlackApiService
@@ -46,7 +47,7 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideGsonConverterFactory(): GsonConverterFactory {
-        return GsonConverterFactory.create(GsonBuilder().create())
+        return GsonConverterFactory.create(GsonBuilder().setStrictness(Strictness.LENIENT).create())
     }
 
     @Singleton
