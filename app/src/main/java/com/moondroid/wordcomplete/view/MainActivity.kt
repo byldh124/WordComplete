@@ -9,6 +9,7 @@ import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
 import android.view.animation.AnimationUtils
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.content.ContextCompat
@@ -17,6 +18,7 @@ import androidx.core.widget.TextViewCompat
 import com.bumptech.glide.Glide
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
+import com.google.android.material.snackbar.Snackbar
 import com.moondroid.wordcomplete.R
 import com.moondroid.wordcomplete.databinding.ActivityMainBinding
 import com.moondroid.wordcomplete.delegate.viewBinding
@@ -68,6 +70,7 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        onBackPressedDispatcher.addCallback(this, callback)
         init()
     }
 
@@ -81,6 +84,22 @@ class MainActivity : BaseActivity() {
     private fun checkItem() {
         if (ItemHelper.items.isNotEmpty()) setItem()
         else getItems()
+    }
+    private var mBackWait = 0L       //Back 2번 클릭
+
+    private val callback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            onBack()
+        }
+    }
+
+    private fun onBack() {
+        if (System.currentTimeMillis() - mBackWait >= 2000) {
+            mBackWait = System.currentTimeMillis()
+            Snackbar.make(binding.root, "뒤로가기를 한번 더 누르시면 종료됩니다.", Snackbar.LENGTH_SHORT).show()
+        } else {
+            finish()
+        }
     }
 
     private fun getItems() {
