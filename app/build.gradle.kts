@@ -19,8 +19,8 @@ android {
         applicationId = "com.moondroid.wordcomplete"
         minSdk = 23
         targetSdk = 34
-        versionCode = 24
-        versionName = "1.2.13"
+        versionCode = 25
+        versionName = "1.2.14"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 

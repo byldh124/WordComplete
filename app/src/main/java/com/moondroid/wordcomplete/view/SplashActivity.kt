@@ -119,8 +119,17 @@ class SplashActivity : BaseActivity() {
         val message = "새로운 버전이 나왔습니다.\n플레이 스토어에서 업데이트 해주세요."
         val onClick = {
             val updateIntent = Intent(Intent.ACTION_VIEW)
-            updateIntent.data = Uri.parse("market://details?id=${mContext.packageName}")
-            startActivity(updateIntent)
+            try {
+                updateIntent.data = Uri.parse("market://details?id=${mContext.packageName}")
+                startActivity(updateIntent)
+            } catch (e: Exception) {
+                try {
+                    updateIntent.data = Uri.parse("https://play.google.com/store/apps/details?id=${mContext.packageName}")
+                    startActivity(updateIntent)
+                } catch (e: Exception) {
+                    finish()
+                }
+            }
         }
         oneButtonDialog?.let {
             it.msg = message
